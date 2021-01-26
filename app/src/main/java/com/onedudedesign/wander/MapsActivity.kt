@@ -37,10 +37,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val latitude = 48.02870
+        val longitude = -122.13355
+        val zoomLevel = 15f
+
+        val homeLatLng = LatLng(latitude, longitude)
+
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(homeLatLng, zoomLevel))
+
+        map.addMarker(MarkerOptions().position(homeLatLng))
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -50,25 +57,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
-        when (item.itemId) {
-            // Change the map type based on the user's selection.
-            R.id.normal_map -> {
-                map.mapType = GoogleMap.MAP_TYPE_NORMAL
-                true
+            when (item.itemId) {
+                // Change the map type based on the user's selection.
+                R.id.normal_map -> {
+                    map.mapType = GoogleMap.MAP_TYPE_NORMAL
+                    true
+                }
+                R.id.hybrid_map -> {
+                    map.mapType = GoogleMap.MAP_TYPE_HYBRID
+                    true
+                }
+                R.id.satellite_map -> {
+                    map.mapType = GoogleMap.MAP_TYPE_SATELLITE
+                    true
+                }
+                R.id.terrain_map -> {
+                    map.mapType = GoogleMap.MAP_TYPE_TERRAIN
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
             }
-            R.id.hybrid_map -> {
-                map.mapType = GoogleMap.MAP_TYPE_HYBRID
-                true
-            }
-            R.id.satellite_map -> {
-                map.mapType = GoogleMap.MAP_TYPE_SATELLITE
-                true
-            }
-            R.id.terrain_map -> {
-                map.mapType = GoogleMap.MAP_TYPE_TERRAIN
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
 
 }
